@@ -1,0 +1,17 @@
+name = "IMUDevNNLib"
+uuid = "295d651b-8f3c-4826-af69-6cde381c7ec2"
+authors = ["Marcin Mider <marcin.mider@gmail.com> and contributors"]
+version = "0.1.0"
+
+[deps]
+MLUtils = "f1d291b0-491e-4a28-83b9-f70985020b54"
+
+[compat]
+julia = "1.10"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[targets]
+test = ["Test", "LinearAlgebra"]
