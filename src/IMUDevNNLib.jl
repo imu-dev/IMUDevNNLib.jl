@@ -1,6 +1,7 @@
 module IMUDevNNLib
 
 using MLUtils
+using NNlib
 
 const Abstract3Tensor = AbstractArray{<:Any,3}
 
