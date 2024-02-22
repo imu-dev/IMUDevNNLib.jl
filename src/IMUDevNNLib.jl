@@ -8,8 +8,6 @@ include("utils.jl")
 include("temporal_data.jl")
 include("batched_operations.jl")
 
-export Abstract3Tensor
-
 # utils.jl
 export skipfirstobs, eachslicelastdim
 
