@@ -8,7 +8,7 @@ include("utils.jl")
 include("batched_operations.jl")
 
 # utils.jl
-export skipfirstobs, eachslicelastdim
+export skipfirstobs, eachslicelastdim, selectfirstobs
 
 # batched_operations.jl
 export batched_matvecmul, batched_rinv, batched_rinvsolve, batched_rinvsolve!
