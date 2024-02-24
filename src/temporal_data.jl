@@ -37,13 +37,13 @@ end
 Base.eltype(::TemporalData{K}) where {K} = K
 
 """
-    Flux.MLUtils.numobs(d::TemporalData)
+    MLUtils.numobs(d::TemporalData)
 
 For temporal data, the number of observations is synonymous with the batch size.
 Batch size is going to be the last dimension of every array corresponding to
 any timepoint.
 """
-function Flux.MLUtils.numobs(d::TemporalData)
+function MLUtils.numobs(d::TemporalData)
     isempty(d.yy) && return throw("TemporalData object contains no observations")
     return size(first(d.yy))[end]
 end
@@ -68,12 +68,12 @@ function temporal_data(T::DataType, xx::AbstractArray, yy::AbstractArray;
 end
 
 """
-    Flux.MLUtils.getobs(d::TemporalData, i) 
+    MLUtils.getobs(d::TemporalData, i) 
 
 Return the entire time series for the i-th observation (if `i` is a vector or a
 range it will return a vector of time series for the correspoding batch.)
 """
-function Flux.MLUtils.getobs(d::TemporalData, i)
+function MLUtils.getobs(d::TemporalData, i)
     n_x = ndims(first(d.xx))
     n_y = ndims(first(d.yy))
     if isempty(d.x₀)
