@@ -36,6 +36,8 @@ end
 
 Base.eltype(::TemporalData{K}) where {K} = K
 
+is_skipfirst(td::TemporalData) = !isempty(td.x₀) || !isempty(td.y₀)
+
 """
     MLUtils.numobs(d::TemporalData)
 
@@ -48,14 +50,24 @@ function MLUtils.numobs(d::TemporalData)
     return size(first(d.yy))[end]
 end
 
-function temporal_data(xx::AbstractArray, yy::AbstractArray; skipfirst=false)
-    x₀, y₀ = if skipfirst
+function temporal_data(xx::AbstractArray, yy::AbstractArray;
+                       skipfirst=false,
+                       x₀::Union{<:AbstractArray,Missing}=missing,
+                       y₀::Union{<:AbstractArray,Missing}=missing,)
+    _x₀, _y₀ = if skipfirst
         xx = skipfirstobs(xx)
         yy = skipfirstobs(yy)
         selectfirstobs(xx), selectfirstobs(yy)
     else
         _empty_x₀(xx), _empty_x₀(yy)
     end
+    if ismissing(x₀)
+        x₀ = _x₀
+    end
+    if ismissing(y₀)
+        y₀ = _y₀
+    end
+
     return TemporalData([copy(x) for x in eachslicelastdim(xx)],
                         [copy(y) for y in eachslicelastdim(yy)],
                         copy(x₀),
@@ -65,6 +77,34 @@ end
 function temporal_data(T::DataType, xx::AbstractArray, yy::AbstractArray;
                        skipfirst=false)
     return temporal_data(T.(xx), T.(yy); skipfirst)
+end
+
+function temporal_data(; xx::Union{<:AbstractArray,Missing}=missing,
+                       yy::Union{<:AbstractArray,Missing}=missing,
+                       x₀::Union{<:AbstractArray,Missing}=missing,
+                       y₀::Union{<:AbstractArray,Missing}=missing,
+                       skipfirst=false)
+    ismissing(xx) && ismissing(yy) && throw("At least one of `xx` or `yy` must be provided")
+    if ismissing(xx)
+        xx = similar(yy, 0, size(yy)[(end - 1):end]...)
+    end
+    if ismissing(yy)
+        yy = similar(xx, 0, size(xx)[(end - 1):end]...)
+    end
+    return temporal_data(xx, yy; skipfirst, x₀, y₀)
+end
+
+function temporal_data(T::DataType;
+                       xx::Union{<:AbstractArray,Missing}=missing,
+                       yy::Union{<:AbstractArray,Missing}=missing,
+                       x₀::Union{<:AbstractArray,Missing}=missing,
+                       y₀::Union{<:AbstractArray,Missing}=missing,
+                       skipfirst=false)
+    return temporal_data(; xx=ismissing(xx) ? xx : T.(xx),
+                         yy=ismissing(yy) ? yy : T.(yy),
+                         x₀=ismissing(x₀) ? x₀ : T.(x₀),
+                         y₀=ismissing(y₀) ? y₀ : T.(y₀),
+                         skipfirst)
 end
 
 """
@@ -85,5 +125,50 @@ end
 
 num_samples(td::TemporalData) = size(first(td.xx))[end]
 num_timepoints(td::TemporalData) = length(td.xx)
-state_dim(td::TemporalData) = size(first(td.xx))[1:(end - 1)]
-obs_dim(td::TemporalData) = size(first(td.yy))[1:(end - 1)]
+function state_dim(td::TemporalData)
+    x = isempty(first(td.xx)) ? td.x₀ : first(td.xx)
+    isempty(x) && throw("State dimension cannot be determined")
+    return size(x)[1:(end - 1)]
+end
+function obs_dim(td::TemporalData)
+    y = isempty(first(td.yy)) ? td.y₀ : first(td.yy)
+    isempty(y) && throw("Observation dimension cannot be determined")
+    return size(y)[1:(end - 1)]
+end
+
+"""
+Return the size of the output container for the given `TemporalData` object.
+This can be either:
+- the size of the state (if `of_what` is `:state` or `:xx`)
+- the size of the observation (if `of_what` is `:obs`, `:observation` or `:yy`)
+Note that the output container is assumed to be an N-tensor (N > 2) where the
+last two dimensions correspond to the batch and time dimensions respectively;
+and in particular, **the time dimension includes the initial state!**
+"""
+Base.size(td::TemporalData, of_what::Symbol; kwargs...) = size(td, Val(of_what); kwargs...)
+
+function Base.size(td::TemporalData, ::Union{Val{:state},Val{:xx}}; state_size=nothing)
+    state_size = try
+        state_dim(td)
+    catch e
+        isnothing(state_size) && throw(e)
+    end
+    return (state_size..., num_samples(td), num_timepoints(td) + is_skipfirst(td))
+end
+
+function Base.size(td::TemporalData,
+                   ::Union{Val{:obs},Val{:observation},Val{:observations},Val{:yy}};
+                   obs_size=nothing)
+    obs_size = try
+        obs_dim(td)
+    catch e
+        isnothing(obs_size) && throw(e)
+    end
+    return (obs_size..., num_samples(td), num_timepoints(td) + is_skipfirst(td))
+end
+
+function out_container(td::TemporalData, of_what::Symbol; batchsize, kwargs...)
+    return BatchedTemporalContainer(eltype(td),
+                                    size(td, Val(of_what); kwargs...),
+                                    batchsize)
+end
