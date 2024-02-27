@@ -1,8 +1,16 @@
-# IMUDevNNLib
+# IMUDevNNLib.jl
 
+[![][docs-stable-img]][docs-stable-url]
+[![][docs-dev-img]][docs-dev-url]
+&nbsp;&nbsp;&nbsp;&nbsp;
 [![Build Status](https://github.com/imu-dev/IMUDevNNLib.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/imu-dev/IMUDevNNLib.jl/actions/workflows/CI.yml?query=branch%3Amain)
 
 Toolbox designed to support workflows involving Neural Networks. [NNlib](https://github.com/FluxML/NNlib.jl) is the prototypical package of this kind, which covers most of the common use cases; however, when restricting to IMU-type data it is beneficial to encapsulate other, more specific sorts of abstractions. This package collects some of those.
 
 > [!NOTE]
 > See also [IMUDevNNTrainingLib](https://github.com/imu-dev/IMUDevNNTrainingLib.jl) for a dependant package that introduces further extensions (at the expense of heavier dependencies) that are useful at the time of training Neural Nets on IMU data.
+
+[docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
+[docs-stable-url]: imu-dev.github.io/IMUDevNNLib.jl/stable/
+[docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
+[docs-dev-url]: imu-dev.github.io/IMUDevNNLib.jl/dev
