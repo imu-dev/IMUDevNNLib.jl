@@ -1,0 +1,3 @@
+# ignore Markdown files, as the Documenter.jl package has some conflicts with
+# the default Markdown formatting.
+docs/src/*/*.md

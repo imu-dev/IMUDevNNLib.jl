@@ -1,4 +1,3 @@
-
 """
     skipfirstobs(x::AbstractArray)
 
@@ -14,7 +13,6 @@ Given an array `x` representing a time series, with the last dimension
 corresponding to time, return a new array with only the first observation.
 """
 selectfirstobs(x::AbstractArray) = selectdim(x, ndims(x), 1)
-
 
 """
     eachslicelastdim(m::AbstractArray{<:Any,N}) where {N}

@@ -12,7 +12,7 @@ include("batched_temporal_container.jl")
 
 # temporal_data.jl
 export TemporalData, temporal_data, num_samples, num_timepoints, state_dim, obs_dim,
-       out_size, out_container
+       out_size, outputcontainer
 
 # utils.jl
 export skipfirstobs, eachslicelastdim, selectfirstobs

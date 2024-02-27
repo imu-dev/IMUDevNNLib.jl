@@ -1,3 +1,15 @@
+"""
+    BatchedTemporalContainer(T::DataType,
+                             size::NTuple{N,Int},
+                             batchsize::Int) where {N}
+
+A container that is used to write the results of operations performed on a
+`TemporalData` object. Internally, it is an N-tensor (N > 2) where the last two
+dimensions correspond to the batch and time dimensions respectively. Double
+indexing into this object via `[i, t]` returns the (N-2)-dimensional array
+corresponding to the `t`-th timepoint of the `i`-th batch. Single indexing
+`[i]` returns the entire time series of the `i`-th batch.
+"""
 struct BatchedTemporalContainer{T<:AbstractArray}
     container::T
     batchsize::Int
@@ -66,4 +78,9 @@ function Base.lastindex(c::BatchedTemporalContainer, d=1)
     end
 end
 
+"""
+    getdata(c::BatchedTemporalContainer)
+
+Return the underlying data of the container.
+"""
 getdata(c::BatchedTemporalContainer) = c.container
