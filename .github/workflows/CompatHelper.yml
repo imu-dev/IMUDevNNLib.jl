@@ -5,6 +5,9 @@ on:
   workflow_dispatch:
 jobs:
   CompatHelper:
+    permissions:
+      contents: write
+      statuses: write
     runs-on: ubuntu-latest
     steps:
       - name: Pkg.add("CompatHelper")
@@ -14,5 +17,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMPATHELPER_PRIV: ${{ secrets.DOCUMENTER_KEY }}
         run: julia -e 'using CompatHelper; CompatHelper.main()'
-permissions:
-  contents: write
