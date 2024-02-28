@@ -11,6 +11,9 @@ Toolbox designed to support workflows involving Neural Networks. [NNlib](https:/
 > [!NOTE]
 > See also [IMUDevNNTrainingLib](https://github.com/imu-dev/IMUDevNNTrainingLib.jl) for a dependant package that introduces further extensions (at the expense of heavier dependencies) that are useful at the time of training Neural Nets on IMU data.
 
+> [!IMPORTANT]
+> This package **<u>is not</u>** registered with Julia's [General Registry](https://github.com/JuliaRegistries/General), but instead, with `imu.dev`'s local [IMUDevRegistry](https://github.com/imu-dev/IMUDevRegistry). In order to use this package you will need to add [IMUDevRegistry](https://github.com/imu-dev/IMUDevRegistry) to the list of your registries.
+
 <!-- [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
 [docs-stable-url]: https://imu-dev.github.io/IMUDevNNLib.jl/stable/ -->
 
