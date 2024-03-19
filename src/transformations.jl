@@ -6,7 +6,9 @@ The data are assumed to be given in a matrix form, with:
 1. first dimension indexing through the state coordinates, and
 2. the second dimension indexing through the time points
 
-    plane_rotation(data::Abstract3Tensor, angles::AbstractVector; plane_indices=1:2)
+```julia
+plane_rotation(data::Abstract3Tensor, angles::AbstractVector; plane_indices=1:2)
+```
 
 Rotate the `data` in the plane spanned by indices `plane_indices` by `angles`.
 The data are assumed to be given in a 3-tensor form, with:
