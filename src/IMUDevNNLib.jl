@@ -1,8 +1,6 @@
 module IMUDevNNLib
 
-# I removed NNlib from dependencies, because I can't remember if it's being used
-# anywhere. If it is the code will break at some point and I will add it back.
-# using NNlib
+using NNlib: batched_mul
 using MLUtils
 using Random
 
