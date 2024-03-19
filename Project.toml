@@ -1,15 +1,15 @@
 name = "IMUDevNNLib"
 uuid = "295d651b-8f3c-4826-af69-6cde381c7ec2"
 authors = ["Marcin Mider <marcin.mider@gmail.com> and contributors"]
-version = "0.4.2"
+version = "0.5.0"
 
 [deps]
 MLUtils = "f1d291b0-491e-4a28-83b9-f70985020b54"
 NNlib = "872c559c-99b0-510c-b3b7-b6c96a88d5cd"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
 MLUtils = "0.4"
-NNlib = "0.9"
 julia = "1.10"
 
 [extras]

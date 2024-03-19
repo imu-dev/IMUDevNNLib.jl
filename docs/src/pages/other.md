@@ -5,5 +5,8 @@ Some additional tools include:
 ```@docs
 skipfirstobs
 selectfirstobs
-eachslicelastdim
+peelfirstobs
+selectalonglastdim
+mergealonglastdim
+nnflatten
 ```
