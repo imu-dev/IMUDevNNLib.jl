@@ -99,7 +99,7 @@ function _draw_random_angle_per_sample(rng::Random.AbstractRNG,
     batchsize = size(dummy_data, ndims(dummy_data))
     angles = similar(dummy_data, batchsize)
     rand!(rng, angles)
-    angles *= eltype(dummy_data)(max_angle)
+    angles .*= eltype(dummy_data)(max_angle)
     return angles
 end
 

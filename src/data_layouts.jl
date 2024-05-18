@@ -134,8 +134,8 @@ state_dim(::SingleArrayLayout, data::AbstractArray) = size(data)[1:(ndims(data) 
 Return the total number of samples in `data`.
 """
 num_samples(::DataLayout, data::AbstractArray) = size(data, ndims(data))
-function num_samples(l::TimeseriesLayout, data::Vector{<:AbstractArray})
-    return num_samples(l, data)
+function num_samples(::TimeseriesLayout, data::Vector{<:AbstractArray})
+    return num_samples(SingleArrayLayout(), first(data))
 end
 num_samples(::SingleTimeseriesLayout, data::AbstractArray) = 1
 
