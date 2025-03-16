@@ -22,7 +22,7 @@ Compute the number of timepoints for a given iteration policy `p`, data layout
 num_timepoints
 
 """
-    ZipIterPolicy
+    $(TYPEDEF)
 
 A default iteration policy for [`TimeseriesIterator`](@ref) that zips all
 `xx` and `yy` in a one-to-one fashion.
@@ -42,7 +42,7 @@ function num_timepoints(p::ZipIterPolicy,
 end
 
 """
-    TakeX0IterPolicy
+    $(TYPEDEF)
 
 An iteration policy for [`TimeseriesIterator`](@ref) that takes the first
 underlying state `x₀`, but discards all the rest and takes all states in `yy`.
@@ -64,7 +64,7 @@ function num_timepoints(p::TakeX0IterPolicy,
 end
 
 """
-    TakeX0NoY0Policy
+    $(TYPEDEF)
 
 An iteration policy for [`TimeseriesIterator`](@ref) that takes the first
 underlying state `x₀`, but discards all the rest, as well as assumes that `yy`
@@ -72,7 +72,7 @@ has no observation `y₀` that would correspond to `x₀`.
 """
 struct TakeX0NoY0Policy end
 takexx(::TakeX0NoY0Policy, iter_state::Int) = iter_state == 1
-takeyy(::TakeX0NoY0Policy, ::Int) = iter_state != 1
+takeyy(::TakeX0NoY0Policy, iter_state::Int) = iter_state != 1
 function num_timepoints(p::TakeX0NoY0Policy,
                         l::TimeseriesLayout,
                         xx::Vector{<:AbstractArray},

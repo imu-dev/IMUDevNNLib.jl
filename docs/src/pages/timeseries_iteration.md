@@ -1,5 +1,8 @@
 # Iteration over timeseries data
-In order to pass timeseries data through a recurrent neural networks we must iterate over timepoints and pass them one by one. Further complication may arise if the timeseries coming from `features` and that coming from `labels` should not be zipped together in a 1-to-1 manner. To this end we introduce an interface for `TimeseriesIterationPolicy`.
+In order to pass timeseries data through a recurrent neural networks we must iterate over timepoints and pass them one by one.
+Further complication may arise if the `features` timeseries and the `labels` timeseries are not to be simply zipped together in a 1-to-1 manner.
+(an example would be: `1` observation (`label`: position) per `30` collected data points (`feature`: acceleration)).
+To this end we introduce an interface for `TimeseriesIterationPolicy`.
 
 ## Interface for iteration policy
 
@@ -11,21 +14,22 @@ num_timepoints
 
 !!! note "Notation"
     `features` (or `input`) and `labels` come from the machine learning terminology, whereas `xx` and `yy` are used in State Space Models.
-    The mapping between the two can be unintuitive. For instace, consider the following example from IMU data:
+    The mapping between the two can be unintuitive.
+    For instace, consider the following example from IMU data:
 
-    !!! tip "Example"
+    !!! todo "Example"
         We observe `acceleration` and `angular velocity` to predict `position`.
 
-    From the machine learning perspective we have:
+        From the machine learning perspective we have:
+        
+        - `features`: the observations, i.e. `acceleration` and `angular velocity`
+        - `labels`: the things we wish to predict i.e. `position` 
     
-    - `features`: the observations, i.e. `acceleration` and `angular velocity`
-    - `labels`: the things we wish to predict i.e. `position` 
-  
-    On the other hand, from the perspective of state space modelling:
+        On the other hand, from the perspective of state space modelling:
 
-    - `xx`: the "underlying state", i.e. `position`
-    - `yy`: the observations, i.e. `acceleration` and `angular velocity`
-  
+        - `xx`: the "underlying state", i.e. `position`
+        - `yy`: the observations, i.e. `acceleration` and `angular velocity`
+    
     So, technically, the mapping between two should be
     
     - `features` ⟷ `yy`
@@ -77,13 +81,13 @@ do_something_with_loss = ...
 for (features, labels) in data_loader
     preprocess!(features, labels)
 
-    features = reshape(features, SingleArrayLayout() => TimeseriesLayout())
-    labels = reshape(input, SingleArrayLayout() => TimeseriesLayout())
+    features = reshape(features, StackedArrayLayout() => TimeseriesLayout())
+    labels = reshape(input, StackedArrayLayout() => TimeseriesLayout())
 
     it = timeseriesiterator(features, labels, ZipIterPolicy())
 
     (x₀, y₀), it = Iterators.peel(it)
-    init_model!(model, x₀)
+    init_model!(model, x₀, y₀)
 
     for (x, y) in it
         y° = model(x)

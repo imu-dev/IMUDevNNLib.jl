@@ -1,5 +1,6 @@
 module IMUDevNNLib
 
+using DocStringExtensions
 using NNlib: batched_mul
 using MLUtils
 using Random
@@ -28,7 +29,7 @@ export BatchDelimitedArray, batchdelimitedarray, getdata
 
 # data_layouts.jl
 export DataLayout, TimeseriesLayout, SingleObsTimeseriesLayout,
-       SingleArrayLayout, state_dim, num_samples, num_timepoints,
+       StackedArrayLayout, state_dim, num_samples, num_timepoints,
        SingleTimeseriesLayout, write_header!, read_header, dimsofreshape
 
 # data_transformations.jl

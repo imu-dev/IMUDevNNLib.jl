@@ -16,7 +16,7 @@ DataLayout
 SingleTimeseriesLayout
 TimeseriesLayout
 SingleObsTimeseriesLayout
-SingleArrayLayout
+StackedArrayLayout
 ```
 
 ## Utility functions

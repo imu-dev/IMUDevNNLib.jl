@@ -18,4 +18,6 @@ makedocs(; sitename="IMUDevNNLib",
 # Documenter can also automatically deploy documentation to gh-pages.
 # See "Hosting Documentation" and deploydocs() in the Documenter manual
 # for more information.
-deploydocs(; repo="github.com/imu-dev/IMUDevNNLib.jl.git")
+if get(ENV, "CI", "false") == "true"
+    deploydocs(; repo="github.com/imu-dev/IMUDevNNLib.jl.git")
+end

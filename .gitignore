@@ -1,4 +1,5 @@
-/Manifest.toml
 /sandbox
 /doc_gen
-/docs/Manifest.toml
+/docs/build
+*Manifest.toml
+*.DS_Store

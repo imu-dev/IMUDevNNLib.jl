@@ -1,10 +1,12 @@
 """
+    $(TYPEDEF)
+
 Parent to all `struct`s that slice and dice data for further analysis.
 """
 abstract type DataArranger end
 
 """
-    SlidingWindow
+    $(TYPEDEF)
 
 A data arranger that's a simple sliding window. It will cut segments of data
 from the input array by sliding a `window` of a fixed size, moving it by
@@ -32,7 +34,7 @@ used to specify the `eltype` of the arranged data.
 ```julia
 (arranger::SlidingWindow)(io::IOStream,
                           from_to::Pair{SingleTimeseriesLayout,
-                                        SingleArrayLayout},
+                                        StackedArrayLayout},
                           data::AbstractArray)
 ```
 
@@ -44,7 +46,7 @@ Arrange the `data` using the `SlidingWindow` and write it to the `io` stream.
 
 ```julia
 (arranger::SlidingWindow)(from_to::Pair{SingleTimeseriesLayout,
-                                        SingleArrayLayout},
+                                        StackedArrayLayout},
                           data::AbstractArray)
 ```
 
@@ -115,7 +117,7 @@ end
 
 function (arranger::SlidingWindow)(io::IOStream,
                                    from_to::Pair{SingleTimeseriesLayout,
-                                                 SingleArrayLayout},
+                                                 StackedArrayLayout},
                                    data::AbstractArray)
     from_layout, _ = from_to
     ntimepts = num_timepoints(layout, data)
@@ -130,7 +132,7 @@ function (arranger::SlidingWindow)(io::IOStream,
 end
 
 function (arranger::SlidingWindow)(from_to::Pair{SingleTimeseriesLayout,
-                                                 SingleArrayLayout},
+                                                 StackedArrayLayout},
                                    data::AbstractArray)
     from_layout, _ = from_to
     ntimepts = num_timepoints(from_layout, data)

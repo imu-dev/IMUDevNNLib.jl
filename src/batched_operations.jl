@@ -1,5 +1,5 @@
 """
-    alt_batched_mul(A::Abstract3Tensor, B::AbstractMatrix)
+    batched_matvecmul(A::Abstract3Tensor, B::AbstractMatrix)
 
 NNlib's `batched_mul` may not behave as expected when one of the arguments is
 a matrix. NNlib assumes that the matrix `B` must be broadcasted over each batch,

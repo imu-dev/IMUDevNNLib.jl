@@ -1,5 +1,5 @@
 """
-    TimeseriesIterator
+    $(TYPEDEF)
 
 A joint iterator over two iterables `xx` and `yy` that conceptually correspond
 to "underlying state" and "observations". Use `timeseriesiterator` to construct
@@ -7,15 +7,13 @@ this `struct`.
 
 # Constructors
 
-```julia
-timeseriesiterator(xx::Vector{<:AbstractArray},
-                   yy::Vector{<:AbstractArray},
-                   policy;
-                   num_timepoints::Int=num_timepoints(policy,
-                                                      TimeseriesLayout(),
-                                                      xx,
-                                                      yy))
-```
+    timeseriesiterator(xx::Vector{<:AbstractArray},
+                       yy::Vector{<:AbstractArray},
+                       policy;
+                       num_timepoints::Int=num_timepoints(policy,
+                                                          TimeseriesLayout(),
+                                                          xx,
+                                                          yy))
 
 A recommended constructor for `TimeseriesIterator`. `num_timepoints` is the
 total number of timepoints in a timeseries. `policy` defines the way in which

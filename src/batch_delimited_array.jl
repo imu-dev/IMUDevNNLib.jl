@@ -1,5 +1,5 @@
 """
-    BatchDelimitedArray(data::AbstractArray, batchsize::Int)
+    $(TYPEDEF)
 
 An array `data` that is split into blocks of batches of size `batchsize` each
 (with the last batch possibly shrunk to fit the `data`'s dimensions). Indexing
